@@ -16,6 +16,11 @@ def consultar_saldo(legajo):
 def solicitar_vaciones(legajo):
     inicio = input('Ingresa la fecha de inicio(DD/MM/AAAA) ')
     fin = input('Ingresa la fecha de fin(DD/MM/AAAA) ')
+    print('Resumen')
+    print(indice[legajo]['nombre'])
+    print(f'Desde: {inicio}')
+    print(f'Hasta: {fin}')
+    confirmacion = input('Confirmas? Escribe SI o NO: ')
     
 
-consultar_saldo(legajo)
+solicitar_vaciones(legajo)
