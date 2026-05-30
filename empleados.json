@@ -1,0 +1,22 @@
+{
+    "1001": {
+        "nombre": "Juan Perez",
+        "dias_disponibles": 15
+    },
+    "1002": {
+        "nombre": "Maria Gomez",
+        "dias_disponibles": 10
+    },
+    "1003": {
+        "nombre": "Carlos Rodriguez",
+        "dias_disponibles": 20
+    },
+    "1004": {
+        "nombre": "Lucia Fernandez",
+        "dias_disponibles": 8
+    },
+    "1005": {
+        "nombre": "Sofia Martinez",
+        "dias_disponibles": 3
+    }
+}
