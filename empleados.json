@@ -1,22 +1,27 @@
 {
     "1001": {
         "nombre": "Juan Perez",
-        "dias_disponibles": 9
+        "dias_disponibles": 9,
+        "vacaciones_activas": null
     },
     "1002": {
         "nombre": "Maria Gomez",
-        "dias_disponibles": 10
+        "dias_disponibles": 10,
+        "vacaciones_activas": null
     },
     "1003": {
         "nombre": "Carlos Rodriguez",
-        "dias_disponibles": 20
+        "dias_disponibles": 20,
+        "vacaciones_activas": null
     },
     "1004": {
         "nombre": "Lucia Fernandez",
-        "dias_disponibles": 8
+        "dias_disponibles": 8,
+        "vacaciones_activas": null
     },
     "1005": {
         "nombre": "Sofia Martinez",
-        "dias_disponibles": 3
+        "dias_disponibles": 3,
+        "vacaciones_activas": null
     }
 }
