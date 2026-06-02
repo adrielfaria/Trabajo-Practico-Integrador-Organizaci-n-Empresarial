@@ -7,6 +7,13 @@ with open("empleados.json", "r", encoding="utf-8") as f:
 def consultar_saldo(legajo):
     print(f'Su saldo de dias disponible es de {indice[legajo]['dias_disponibles']}')
 
+def legajo():
+    legajo = input('Por favor ingrese su legajo: ')
+    if legajo in indice:
+        print('legajo existe')
+        return legajo
+    else:
+        print('El legajo ingresado no existe.')
 
 def solicitar_vaciones(legajo):
     fecha_inicio = input('Ingresa la fecha de inicio(DD/MM/AAAA) ')
@@ -36,10 +43,10 @@ def salir():
 
 def main():
     print('👋 Bienvenido al Bot de Vacaciones')
-    legajo = input('Por favor ingrese su legajo: ')
+    legajo_validado = legajo()
     opciones = {
-        '1': lambda: consultar_saldo(legajo),
-        '2': lambda: solicitar_vaciones(legajo),
+        '1': lambda: consultar_saldo(legajo_validado),
+        '2': lambda: solicitar_vaciones(legajo_validado),
         '3': salir
     }
 
