@@ -43,17 +43,25 @@ def confirmacion(legajo_validado, dias_solicitados):
             funcion()
             break
             
+def validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
+    dias_restantes = indice[legajo_validado]['dias_disponibles'] - dias_solicitados
+    if dias_restantes < 0:
+        print('Saldo de dias insuficiente')
+        return False
+    else:
+        print(resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado))
+        return True
+    
 
 def solicitar_vaciones(legajo_validado):
     fecha_inicio = input('Ingresa la fecha de inicio(DD/MM/AAAA) ')
     fecha_fin = input('Ingresa la fecha de fin(DD/MM/AAAA) ')
     try:
         inicio = datetime.strptime(fecha_inicio, '%d/%m/%Y')
-        fin = datetime.strptime(fecha_fin, '%d/%m/%Y')
+        fin = datetime.strptime(fecha_fin, '%d/%m/%Y')        
         dias_solicitados = (fin - inicio).days + 1
-        dias_restantes = indice[legajo_validado]['dias_disponibles'] - dias_solicitados
-        print(resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado))
-        confirmacion(legajo_validado, dias_solicitados)
+        if validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
+            confirmacion(legajo_validado, dias_solicitados)
 
 
     except ValueError:
