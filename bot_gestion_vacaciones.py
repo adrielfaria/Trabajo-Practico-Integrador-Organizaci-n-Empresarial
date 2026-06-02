@@ -58,11 +58,13 @@ def solicitar_vaciones(legajo_validado):
     fecha_fin = input('Ingresa la fecha de fin(DD/MM/AAAA) ')
     try:
         inicio = datetime.strptime(fecha_inicio, '%d/%m/%Y')
-        fin = datetime.strptime(fecha_fin, '%d/%m/%Y')        
-        dias_solicitados = (fin - inicio).days + 1
-        if validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
-            confirmacion(legajo_validado, dias_solicitados)
-
+        fin = datetime.strptime(fecha_fin, '%d/%m/%Y')
+        if inicio < fin:        
+            dias_solicitados = (fin - inicio).days + 1
+            if validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
+                confirmacion(legajo_validado, dias_solicitados)
+        else:
+            print('La fecha de inicio no puede ser anterior a la fecha de fin.')
 
     except ValueError:
         print('Ingrese una fecha valida.')
