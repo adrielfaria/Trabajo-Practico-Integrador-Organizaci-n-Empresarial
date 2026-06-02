@@ -27,6 +27,9 @@ def resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado):
 
 def confirmar_vacaciones(legajo_validado, dias_solicitados):
     indice[legajo_validado]['dias_disponibles'] -= dias_solicitados
+    with open('empleados.json', 'w', encoding='utf-8') as f:
+        json.dump(indice, f, ensure_ascii=False, indent=4)
+    print('Vacaciones confirmadas y saldo actualizado.')
 
 
 def confirmacion(legajo_validado, dias_solicitados):
@@ -64,7 +67,7 @@ def solicitar_vaciones(legajo_validado):
             if validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
                 confirmacion(legajo_validado, dias_solicitados)
         else:
-            print('La fecha de inicio no puede ser anterior a la fecha de fin.')
+            print('La fecha de inicio no puede ser anterior a la fecha de fin')
 
     except ValueError:
         print('Ingrese una fecha valida.')
