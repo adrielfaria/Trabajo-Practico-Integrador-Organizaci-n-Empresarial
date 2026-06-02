@@ -25,12 +25,13 @@ def resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado):
         f'Nuevo saldo de dias restantes: {dias_restantes}\n'
     )
 
-def confirmar_vacaciones():
-    return print('Vacaciones confirmadas')
+def confirmar_vacaciones(legajo_validado, dias_solicitados):
+    indice[legajo_validado]['dias_disponibles'] -= dias_solicitados
 
-def confirmacion():
+
+def confirmacion(legajo_validado, dias_solicitados):
     opciones = {
-        '1': confirmar_vacaciones,
+        '1': lambda: confirmar_vacaciones(legajo_validado, dias_solicitados),
         '2': salir
     }
     while True:
@@ -39,9 +40,8 @@ def confirmacion():
         opcion = input('Confirmas?')
         funcion = opciones.get(opcion)
         if funcion:
-            resultado = funcion()
-            if resultado is False:
-                break
+            funcion()
+            break
             
 
 def solicitar_vaciones(legajo_validado):
@@ -53,10 +53,8 @@ def solicitar_vaciones(legajo_validado):
         dias_solicitados = (fin - inicio).days + 1
         dias_restantes = indice[legajo_validado]['dias_disponibles'] - dias_solicitados
         print(resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado))
-        confirmacion()
-        # confirmacion = input('Confirmas? Escribe SI o NO: ')
-        # if confirmacion == 'SI':
-        #     indice[legajo]['dias_disponibles'] = dias_restantes
+        confirmacion(legajo_validado, dias_solicitados)
+
 
     except ValueError:
         print('Ingrese una fecha valida.')
