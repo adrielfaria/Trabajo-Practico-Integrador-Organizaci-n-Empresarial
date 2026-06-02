@@ -15,20 +15,31 @@ def legajo():
     else:
         print('El legajo ingresado no existe.')
 
-def solicitar_vaciones(legajo):
+def resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado):
+    return (
+        'Resumen\n'
+        f'{indice[legajo_validado]["nombre"]}\n'
+        f'Desde: {inicio}\n'
+        f'Hasta: {fin}\n'
+        f'Dias: {dias_solicitados}\n'
+        f'Nuevo saldo de dias restantes: {dias_restantes}\n'
+    )
+
+def solicitar_vaciones(legajo_validado):
     fecha_inicio = input('Ingresa la fecha de inicio(DD/MM/AAAA) ')
     fecha_fin = input('Ingresa la fecha de fin(DD/MM/AAAA) ')
     try:
         inicio = datetime.strptime(fecha_inicio, '%d/%m/%Y')
         fin = datetime.strptime(fecha_fin, '%d/%m/%Y')
         dias_solicitados = (fin - inicio).days + 1
-        dias_restantes = indice[legajo]['dias_disponibles'] - dias_solicitados
-        print('Resumen')
-        print(indice[legajo]['nombre'])
-        print(f'Desde: {inicio}')
-        print(f'Hasta: {fin}')
-        print(f'Dias: {dias_solicitados}')
-        print(f'Nuevo saldo de dias restantes: {dias_restantes}')
+        dias_restantes = indice[legajo_validado]['dias_disponibles'] - dias_solicitados
+        print(resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado))
+        # print('Resumen')
+        # print(indice[legajo]['nombre'])
+        # print(f'Desde: {inicio}')
+        # print(f'Hasta: {fin}')
+        # print(f'Dias: {dias_solicitados}')
+        # print(f'Nuevo saldo de dias restantes: {dias_restantes}')
         confirmacion = input('Confirmas? Escribe SI o NO: ')
         if confirmacion == 'SI':
             indice[legajo]['dias_disponibles'] = dias_restantes
