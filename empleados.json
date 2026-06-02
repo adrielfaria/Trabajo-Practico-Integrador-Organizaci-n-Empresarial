@@ -1,8 +1,12 @@
 {
     "1001": {
         "nombre": "Juan Perez",
-        "dias_disponibles": 9,
-        "vacaciones_activas": null
+        "dias_disponibles": 7,
+        "vacaciones_activas": {
+            "fecha_inicio": "2026-06-20",
+            "fecha_fin": "2026-06-21",
+            "dias_solicitados": 2
+        }
     },
     "1002": {
         "nombre": "Maria Gomez",

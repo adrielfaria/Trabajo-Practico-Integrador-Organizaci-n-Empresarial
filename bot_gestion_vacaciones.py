@@ -13,6 +13,7 @@ def legajo():
         return legajo
     else:
         print('El legajo ingresado no existe.')
+        return False
 
 def resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado):
     return (
@@ -87,7 +88,7 @@ def solicitar_vaciones(legajo_validado):
             if validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
                 confirmacion(legajo_validado, dias_solicitados, inicio, fin)
         else:
-            print('Ingrese una fecha valida.')
+            print('La fecha ingresdaa no es valida.')
 
     except ValueError:
         print('Ingrese una fecha valida.')
@@ -100,6 +101,8 @@ def salir():
 def main():
     print('👋 Bienvenido al Bot de Vacaciones')
     legajo_validado = legajo()
+    if legajo_validado == False:
+        return
     opciones = {
         '1': lambda: consultar_saldo(legajo_validado),
         '2': lambda: solicitar_vaciones(legajo_validado),
