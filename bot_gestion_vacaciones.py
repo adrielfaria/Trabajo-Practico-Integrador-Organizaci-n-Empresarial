@@ -7,7 +7,7 @@ with open("empleados.json", "r", encoding="utf-8") as f:
 def consultar_saldo(legajo):
     print(f'Su saldo de dias disponible es de {indice[legajo]['dias_disponibles']}')
 
-def legajo():
+def pedir_legajo():
     legajo = input('Por favor ingrese su legajo: ')
     if legajo in indice:
         return legajo
@@ -50,12 +50,13 @@ def cancelar_vacaciones(legajo_validado):
 def confirmacion(legajo_validado, dias_solicitados, inicio, fin):
     opciones = {
         '1': lambda: confirmar_vacaciones(legajo_validado, dias_solicitados, inicio, fin),
-        '2': salir
     }
     while True:
         print('\n1. SI')
         print('2. NO')
-        opcion = input('Confirmas?')
+        opcion = input('Confirmas? ')
+        if opcion == '2':
+            break
         funcion = opciones.get(opcion)
         if funcion:
             funcion()
@@ -71,7 +72,7 @@ def validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
         return True
     
 
-def solicitar_vaciones(legajo_validado):
+def solicitar_vacaciones(legajo_validado):
     if indice[legajo_validado]['vacaciones_activas'] is not None:
         vac = indice[legajo_validado]['vacaciones_activas']
         print(f'Ya tienes vacaciones solicitadas del {vac["fecha_inicio"]}al {vac["fecha_fin"]}.')
@@ -95,19 +96,16 @@ def solicitar_vaciones(legajo_validado):
     except Exception as e:
         print(f'Error: {e}')
 
-def salir():
-    return False
 
 def main():
     print('👋 Bienvenido al Bot de Vacaciones')
-    legajo_validado = legajo()
+    legajo_validado = pedir_legajo()
     if legajo_validado == False:
         return
     opciones = {
         '1': lambda: consultar_saldo(legajo_validado),
-        '2': lambda: solicitar_vaciones(legajo_validado),
+        '2': lambda: solicitar_vacaciones(legajo_validado),
         '3': lambda: cancelar_vacaciones(legajo_validado),
-        '4': salir
     }
 
     while True:
@@ -118,12 +116,15 @@ def main():
 
         opcion = input('Escoga una opcion: ')
 
+        if opcion == '4':
+            print('Terminando la ejecucion del programa')
+            break
+
         funcion = opciones.get(opcion)
 
         if funcion:
-            resultado = funcion()
-            if resultado is False:
-                break
+            funcion()
+            
     
 if __name__ == '__main__':
     main()
