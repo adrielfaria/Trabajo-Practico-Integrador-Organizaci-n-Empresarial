@@ -4,10 +4,19 @@ from datetime import datetime, date
 with open("empleados.json", "r", encoding="utf-8") as f:
     indice = json.load(f)
 
-def consultar_saldo(legajo):
+def consultar_saldo(legajo: str) -> None:
+    """
+    Muestra el saldo de dias de vacaciones disponibles del empleado.
+    """
     print(f'Su saldo de dias disponible es de {indice[legajo]['dias_disponibles']}')
 
-def pedir_legajo():
+def pedir_legajo() -> str | bool:
+    """
+    Solicita el legado al usuario y verifica si existe en el sistema.
+
+    returns:
+        str | bool: El legado si es valido, False si no existe.
+    """
     legajo = input('Por favor ingrese su legajo: ')
     if legajo in indice:
         return legajo
@@ -15,7 +24,10 @@ def pedir_legajo():
         print('El legajo ingresado no existe.')
         return False
 
-def resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado):
+def resumen(inicio: date, fin: date, dias_solicitados: int, dias_restantes: int, legajo_validado: str) -> str:
+    """
+    Genera y retorna un texto con el resumen de la solicitud de vacaciones.
+    """
     return (
         'Resumen\n'
         f'{indice[legajo_validado]["nombre"]}\n'
@@ -25,7 +37,10 @@ def resumen(inicio, fin, dias_solicitados, dias_restantes, legajo_validado):
         f'Nuevo saldo de dias restantes: {dias_restantes}\n'
     )
 
-def confirmar_vacaciones(legajo_validado, dias_solicitados, inicio, fin):
+def confirmar_vacaciones(legajo_validado: str, dias_solicitados: int, inicio: date, fin: date) -> None:
+    """
+    Registra las vacaciones del empleado y actualiza el archivo JSON.
+    """
     indice[legajo_validado]['dias_disponibles'] -= dias_solicitados
     indice[legajo_validado]['vacaciones_activas'] = {
         'fecha_inicio': str(inicio),
@@ -36,7 +51,10 @@ def confirmar_vacaciones(legajo_validado, dias_solicitados, inicio, fin):
         json.dump(indice, f, ensure_ascii=False, indent=4)
     print('Vacaciones confirmadas y saldo actualizado.')
 
-def cancelar_vacaciones(legajo_validado):
+def cancelar_vacaciones(legajo_validado: str) -> None:
+    """
+    Cancela las vacaciones activas del empleado y reintegra los dias de saldo.
+    """
     vac = indice[legajo_validado]['vacaciones_activas']
     if vac is None:
         print('No tienes vacaciones activas para cancelar')
@@ -47,7 +65,10 @@ def cancelar_vacaciones(legajo_validado):
         json.dump(indice, f, ensure_ascii=False, indent=4)
     print('Vacaciones canceladas. Se reintegraron los días a tu saldo.')
 
-def confirmacion(legajo_validado, dias_solicitados, inicio, fin):
+def confirmacion(legajo_validado: str, dias_solicitados: int, inicio: date, fin: date) -> None:
+    """
+    Muestra un submenu de confirmacion y ejecuta la accion elegida por el usuario.
+    """
     opciones = {
         '1': lambda: confirmar_vacaciones(legajo_validado, dias_solicitados, inicio, fin),
     }
@@ -62,7 +83,13 @@ def confirmacion(legajo_validado, dias_solicitados, inicio, fin):
             funcion()
             break
             
-def validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
+def validar_fecha(legajo_validado: str, inicio: date, fin: date, dias_solicitados: int) -> bool:
+    """
+    Verifica si el empleado tiene saldo suficiente para la solicitud.
+
+    Returns:
+        bool: True si el saldo alcanza, False si es insuficiente.
+    """
     dias_restantes = indice[legajo_validado]['dias_disponibles'] - dias_solicitados
     if dias_restantes < 0:
         print('Saldo de dias insuficiente')
@@ -72,7 +99,10 @@ def validar_fecha(legajo_validado, inicio, fin, dias_solicitados):
         return True
     
 
-def solicitar_vacaciones(legajo_validado):
+def solicitar_vacaciones(legajo_validado: str) -> None:
+    """
+    Gestiona el flujo completo de solicitud de vacaciones del empleado.
+    """
     if indice[legajo_validado]['vacaciones_activas'] is not None:
         vac = indice[legajo_validado]['vacaciones_activas']
         print(f'Ya tienes vacaciones solicitadas del {vac["fecha_inicio"]}al {vac["fecha_fin"]}.')
@@ -97,7 +127,10 @@ def solicitar_vacaciones(legajo_validado):
         print(f'Error: {e}')
 
 
-def main():
+def main() -> None:
+    """
+    Punto de entrada del bot. Valida el legajo y ejecuta el menu principal.
+    """
     print('👋 Bienvenido al Bot de Vacaciones')
     legajo_validado = pedir_legajo()
     if legajo_validado == False:
